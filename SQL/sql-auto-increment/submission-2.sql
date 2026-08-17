@@ -1,30 +1,21 @@
-CREATE TYPE account_type AS ENUM ('checking', 'savings', 'cd', 'money_market');
+CREATE SEQUENCE gov_id START WITH 1000 INCREMENT BY 3;
 
-CREATE TABLE bank_accounts (
-    id INTEGER PRIMARY KEY,
-    account_type account_type,
-    balance INTEGER
+
+CREATE TABLE gov_employee(
+
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    gov_id INTEGER DEFAULT nextval('gov_id'),
+    name TEXT
 );
 
 
 
 
-
-
-
-
-
 -- Do not modify below this line --
-INSERT INTO bank_accounts (id, account_type, balance) VALUES 
-  (1, 'checking', 1000),
-  (2, 'savings', 2000),
-  (3, 'cd', 3000),
-  (4, 'money_market', 4000);
+INSERT INTO gov_employee (name) 
+  VALUES
+      ('John Doe'),
+      ('Jane Doe'),
+      ('Jim Beam');
 
-SELECT 
-    ba.*,
-    (SELECT STRING_AGG(column_name || ' ' || data_type, ', ')
-     FROM information_schema.columns 
-     WHERE table_name = 'bank_accounts') AS column_types
-FROM 
-    bank_accounts ba;
+SELECT * FROM gov_employee;
